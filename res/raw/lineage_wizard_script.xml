@@ -32,6 +32,10 @@
     </WizardAction>
 
     <WizardAction wizard:uri="intent:#Intent;action=com.libremobileos.setupwizard.LINEAGE_DATETIME;end" id="datetime">
+        <result wizard:action="gapps" />
+    </WizardAction>
+
+    <WizardAction wizard:uri="intent:#Intent;action=com.libremobileos.setupwizard.GAPPS_CONFIG;end" id="gapps">
         <result wizard:action="sim_missing" />
     </WizardAction>
 

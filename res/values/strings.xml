@@ -116,4 +116,15 @@
     <string name="two_button_navigation">2-button navigation</string>
     <string name="navbar_navigation">3-button navigation</string>
     <string name="hide_gesture_hint">Hide gestural navigation hint</string>
+
+    <!-- GMS feature -->
+    <string name="device_reboot">Device will reboot to finish setup.</string>
+    <string name="gapps_config">Configure preinstalled apps</string>
+    <string name="gapps_config_desc">You won\'t be able to change this later. If you\'re not sure, you probably want to choose \"Google apps\", unless you know what you are doing.
+    \nThe \"Google apps\" and \"Play Store\" options contain proprietary software.</string>
+    <string name="gapps">Google apps</string>
+    <string name="vanilla">Vanilla</string>
+    <string name="microg">microG</string>
+    <string name="microg_ps">microG + Play Store</string>
+    <string name="microg_s">microG + Play Store + Contact/Calendar Sync</string>
 </resources>

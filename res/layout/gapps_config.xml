@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2022 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<com.google.android.setupdesign.GlifLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/setup_wizard_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/SudContentFrame">
+
+        <FrameLayout
+            android:id="@+id/page"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/gapps_config_radiobutton1_view"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/radio_padding_top"
+                        android:paddingLeft="@dimen/location_margin_left"
+                        android:paddingRight="@dimen/content_margin_right"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true">
+
+                        <RadioButton
+                            android:id="@+id/gapps_config_radio1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:checked="true"
+                            style="@style/SudRadioButton" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/vanilla"
+                            android:textStyle="bold"
+                            style="@style/SudRadioButton" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/gapps_config_radiobutton2_view"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/radio_padding_top"
+                        android:paddingLeft="@dimen/location_margin_left"
+                        android:paddingRight="@dimen/content_margin_right"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true">
+
+                        <RadioButton
+                            android:id="@+id/gapps_config_radio2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:checked="false"
+                            style="@style/SudRadioButton" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gapps"
+                            android:textStyle="bold"
+                            style="@style/SudRadioButton" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/gapps_config_radiobutton3_view"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/radio_padding_top"
+                        android:paddingLeft="@dimen/location_margin_left"
+                        android:paddingRight="@dimen/content_margin_right"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true">
+
+                        <RadioButton
+                            android:id="@+id/gapps_config_radio3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:checked="false"
+                            style="@style/SudRadioButton" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/microg"
+                            android:textStyle="bold"
+                            style="@style/SudRadioButton" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/gapps_config_radiobutton4_view"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/radio_padding_top"
+                        android:paddingLeft="@dimen/location_margin_left"
+                        android:paddingRight="@dimen/content_margin_right"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true">
+
+                        <RadioButton
+                            android:id="@+id/gapps_config_radio4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:checked="false"
+                            style="@style/SudRadioButton" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/microg_ps"
+                            android:textStyle="bold"
+                            style="@style/SudRadioButton" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/gapps_config_radiobutton5_view"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/radio_padding_top"
+                        android:paddingLeft="@dimen/location_margin_left"
+                        android:paddingRight="@dimen/content_margin_right"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true">
+
+                        <RadioButton
+                            android:id="@+id/gapps_config_radio5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:duplicateParentState="true"
+                            android:clickable="false"
+                            android:checked="false"
+                            style="@style/SudRadioButton" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/microg_s"
+                            android:textStyle="bold"
+                            style="@style/SudRadioButton" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </FrameLayout>
+
+        <com.libremobileos.setupwizard.NavigationLayout
+            android:id="@+id/navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</com.google.android.setupdesign.GlifLayout>

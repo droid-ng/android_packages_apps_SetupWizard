@@ -26,12 +26,16 @@ import static com.libremobileos.setupwizard.Manifest.permission.FINISH_SETUP;
 import static com.libremobileos.setupwizard.SetupWizardApp.ACTION_SETUP_COMPLETE;
 import static com.libremobileos.setupwizard.SetupWizardApp.DISABLE_NAV_KEYS;
 import static com.libremobileos.setupwizard.SetupWizardApp.ENABLE_RECOVERY_UPDATE;
+import static com.libremobileos.setupwizard.SetupWizardApp.GAPPS_CONFIG;
+import static com.libremobileos.setupwizard.SetupWizardApp.GAPPS_CONFIG_PROP;
+import static com.libremobileos.setupwizard.SetupWizardApp.GAPPS_CONFIG_PROP2;
 import static com.libremobileos.setupwizard.SetupWizardApp.LOGV;
 import static com.libremobileos.setupwizard.SetupWizardApp.NAVIGATION_OPTION_KEY;
 import static com.libremobileos.setupwizard.SetupWizardApp.UPDATE_RECOVERY_PROP;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +46,7 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -54,6 +59,7 @@ import android.widget.ImageView;
 import com.google.android.setupcompat.util.SystemBarHelper;
 import com.google.android.setupcompat.util.WizardManagerHelper;
 
+import com.libremobileos.setupwizard.R;
 import com.libremobileos.setupwizard.util.SetupWizardUtils;
 
 public class FinishActivity extends BaseSetupWizardActivity {
@@ -67,6 +73,7 @@ public class FinishActivity extends BaseSetupWizardActivity {
     private final Handler mHandler = new Handler();
 
     private volatile boolean mIsFinishing = false;
+    private volatile boolean mWillReboot = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +118,21 @@ public class FinishActivity extends BaseSetupWizardActivity {
         sendBroadcastAsUser(i, getCallingUserHandle(), FINISH_SETUP);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        SystemBarHelper.hideSystemBars(getWindow());
-        finishSetup();
+        mWillReboot = SystemProperties.getInt(GAPPS_CONFIG_PROP2, 0) == 1
+                && SystemProperties.getInt(GAPPS_CONFIG_PROP, -1) == -1;
+        if (mWillReboot) {
+            new AlertDialog.Builder(this)
+                .setTitle(R.string.setup_complete)
+                .setMessage(R.string.device_reboot)
+                .setPositiveButton(R.string.ok, (d, n) -> {
+                    completeSetup();
+                })
+                .setCancelable(false)
+                .show();
+        } else {
+            SystemBarHelper.hideSystemBars(getWindow());
+            finishSetup();
+        }
     }
 
     private void setupRevealImage() {
@@ -175,11 +195,23 @@ public class FinishActivity extends BaseSetupWizardActivity {
     private void completeSetup() {
         handleNavKeys(mSetupWizardApp);
         handleRecoveryUpdate(mSetupWizardApp);
+        handleGappsConfig(mSetupWizardApp);
         handleNavigationOption(mSetupWizardApp);
         final WallpaperManager wallpaperManager =
                 WallpaperManager.getInstance(mSetupWizardApp);
         wallpaperManager.forgetLoadedWallpaper();
-        finishAllAppTasks();
+        if (mWillReboot) {
+            mHandler.postDelayed(() -> {
+                PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                try {
+                    pm.reboot("userspace");
+                } catch (UnsupportedOperationException ignored) {
+                    pm.reboot(null);
+                }
+            }, 10000);
+        } else {
+            finishAllAppTasks();
+        }
         SetupWizardUtils.enableStatusBar(this);
         Intent intent = WizardManagerHelper.getNextIntent(getIntent(),
                 Activity.RESULT_OK);
@@ -190,6 +222,15 @@ public class FinishActivity extends BaseSetupWizardActivity {
         if (setupWizardApp.getSettingsBundle().containsKey(DISABLE_NAV_KEYS)) {
             writeDisableNavkeysOption(setupWizardApp,
                     setupWizardApp.getSettingsBundle().getBoolean(DISABLE_NAV_KEYS));
+        }
+    }
+
+    private static void handleGappsConfig(SetupWizardApp setupWizardApp) {
+        if (setupWizardApp.getSettingsBundle().containsKey(GAPPS_CONFIG)) {
+            int val = setupWizardApp.getSettingsBundle()
+                    .getInt(GAPPS_CONFIG);
+
+            SystemProperties.set(GAPPS_CONFIG_PROP, String.valueOf(val));
         }
     }
 
